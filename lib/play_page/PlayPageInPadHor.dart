@@ -370,8 +370,14 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
                 setState(() {
                   if(CommonUtils.screenIsVertical(size)){
                     indexV--;
+                    if(indexV <= 0) indexH =0;
+                    else indexH = CommonUtils.getIndex(indexV);
                   }else{
                     indexH--;
+                    if(indexH<=0)indexV = 0;
+                    else{
+                      indexV = indexH*2 ;
+                    }
                   }
 //                  indexV--;
 //                  indexH--;

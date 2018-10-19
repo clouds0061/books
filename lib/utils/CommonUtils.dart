@@ -12,9 +12,13 @@ class CommonUtils {
   static final num oriLeft = 5;//左横屏
 
 
+  static final List<String> listPicUrl = ['www.baidu.com','www.baidu.com','www.baidu.com'];
+
+
   static int getIndex(int oldIndex){
     int ii = (oldIndex~/2);
     int new_index;
+    return ii;
     switch(ii){
       case 0:new_index = 0;
         break;

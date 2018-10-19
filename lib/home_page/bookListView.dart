@@ -60,7 +60,7 @@ class _BookList extends State<BookListView> {
         const url =
             'http://m.appstore.nubia.com/detailedness.html?SoftId=59462&SoftItemId=3379314';
         print('点击了' + bookList[index]);
-        if (await canLaunch(url)) {
+        if (await canLaunch(CommonUtils.listPicUrl[index])) {
           await launch(url);
         } else {
           throw '打开失败!';

@@ -55,7 +55,13 @@ class _HomePageIOS extends State<HomePageIOS> {
     } catch (Exception) {
       name = 'Failed to get device name';
     } finally {
-//      setState(() {});
+      setState(() {
+        if (CommonUtils.isIPad(name)) {
+          initUmeng(1);
+        }else{
+          initUmeng(2);
+        }
+      });
     }
     return name;
   }
@@ -95,7 +101,7 @@ class _HomePageIOS extends State<HomePageIOS> {
     print('设备型号为:$name');
 //    if()
     if (CommonUtils.isIPad(name)) {
-      initUmeng(1);
+//      initUmeng(1);
       var screen = MediaQuery
           .of(context)
           .size;
@@ -108,7 +114,7 @@ class _HomePageIOS extends State<HomePageIOS> {
           ..init(context); //首先默认是pad端。
       }
     } else {
-      initUmeng(2);
+//      initUmeng(2);
       ScreenUtil.instance = new ScreenUtil(width: 750, height: 1334)
         ..init(context); //首先默认是手机端。
 
