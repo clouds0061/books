@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //通用工具类
 class CommonUtils {
@@ -10,6 +11,12 @@ class CommonUtils {
   static final num oriAll = 3; //横竖屏切换
   static final num oriUp = 4;//上竖屏
   static final num oriLeft = 5;//左横屏
+
+
+  static final basic_url = 'https://wxapp.ztsafe.com/books/';
+  static final basic_img_url = 'https://wxapp.ztsafe.com/books/static';
+  static final book_list_url = basic_url + 'api/getBookList';
+  static final book_details_url = basic_url + 'api/getBookDetail';
 
 
   static final List<String> listPicUrl = ['www.baidu.com','www.baidu.com','www.baidu.com'];
@@ -180,4 +187,88 @@ class CommonUtils {
     list.add('');
   }
 
+  static initStringDaddy(List<String> list){
+    list.add('这是我爸爸，他真的很棒!');
+    list.add('我爸爸什么都不怕，连坏蛋大野狼都不怕！');
+    list.add('他可以从月亮上跳过去，');
+    list.add('还会走高空绳索(不会掉下去)。');
+    list.add('他敢跟大力士摔跤。');
+    list.add('在运动会的比赛中，他轻轻松松就跑了第一名。');
+    list.add('我爸爸真的很棒！我爸爸吃的像马一样多，');
+    list.add('游的像鱼一样快。');
+    list.add('他像大猩猩一样强壮，');
+    list.add('也想河马一样快乐。');
+    list.add('我爸爸真的很棒！我爸爸像房子一样高大，');
+    list.add('有时又像泰迪一样柔软。');
+    list.add('他像猫头鹰一样聪明，');
+    list.add('有时也会做一些傻事。');
+    list.add('我爸爸真的很棒！我爸爸是个伟大的舞蹈家，');
+    list.add('也是个了不起的歌唱家。');
+    list.add('他踢足球的技术一流，');
+    list.add('也常常逗的我哈哈大笑。');
+    list.add('我爱他，而且你知道吗？');
+    list.add('他也爱我!(永远爱我。)');
+    list.add('');
+    list.add('');
+    list.add('');
+    list.add('');
+    list.add('');
+  }
+
+
+
+  bool _flag_paly = true;
+  bool  getFlagPlay(){
+    return _flag_paly;
+  }
+  void setFlagPlay(bool flag){
+    this._flag_paly = flag;
+  }
+
+  CommonUtils();
+
+  static CommonUtils _commonUtils;
+
+  static CommonUtils getInstance(){
+    if(_commonUtils == null){
+      _commonUtils = new CommonUtils();
+    }
+    return _commonUtils;
+  }
+
+
+
+  static final String NUM_OF_PAGE = 'num';//图书页面
+  static final String IS_DOWN_LOAD='load';
+  //数据增加 （图书名字,图书页数，是否下载）
+  static Future addInfo(String key,int numOfPage,int isDownLoad) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if(numOfPage!=null&&numOfPage>0&&isDownLoad!=null&&isDownLoad>=0){
+      String numKey = NUM_OF_PAGE + key;
+      String loadKey = IS_DOWN_LOAD + key;
+      preferences.setInt(numKey,numOfPage);
+      preferences.setInt(loadKey,isDownLoad);//0为未下载，1为正在下载，2为已下载
+    }
+  }
+
+//  static F
+
+  //查询是否下载图书  传入图书名字
+  static  queryDownFlag(String key) async{
+    String loadKey = IS_DOWN_LOAD + key;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int isDownLoad = preferences.get(loadKey);
+    if(isDownLoad==null) isDownLoad = 0;
+    return isDownLoad;
+  }
+
+
+  //查询图书页数 传入图书名字
+  static Future<int> queryNumOfPage(String key) async{
+    String numKey = NUM_OF_PAGE + key;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int num = preferences.get(numKey);
+    if(num == null) num = 0;
+    return num;
+  }
 }

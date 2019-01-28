@@ -19,11 +19,17 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  flutter_wechat: "^0.1.5"
+#  flutter_wechat: "^0.1.5"
   url_launcher: "^3.0.3"
   audioplayers: "^0.7.7"
   path_provider: "^0.4.1"
   device_info : ^0.2.1
+#  fluwx: ^0.5.0
+  flutter_swiper: ^1.1.4
+  shared_preferences: ^0.4.2
+  transparent_image: ^0.1.0
+  http: ^0.12.0+1
+  dio: ^1.0.6
   flutter_screenutil:
       git:
         url: git://github.com/openflutter/flutter_screenutil
@@ -58,7 +64,7 @@ flutter:
    - images/play.png
    - images/pause.png
    - images/grandfather.png
-   - images/daddy.png
+   - images/daddy1.png
    - images/rabbit.png
    - images/mom.png
    - images/share.png
@@ -71,6 +77,7 @@ flutter:
    - images/blank.bmp
    - images/image1.jpg
    - images/go2play.png
+   - images/waiting.png
    - images/image2.jpg
    - images/image3.jpg
    - images/image4.jpg
@@ -91,7 +98,30 @@ flutter:
    - images/image19.jpg
    - images/image21.jpg
    - images/image20.jpg
-#   - images/image21.jpg
+
+   - images/father1.jpg
+   - images/father2.jpg
+   - images/father3.jpg
+   - images/father4.jpg
+   - images/father5.jpg
+   - images/father6.jpg
+   - images/father7.jpg
+   - images/father8.jpg
+   - images/father9.jpg
+   - images/father10.jpg
+   - images/father11.jpg
+   - images/father12.jpg
+   - images/father13.jpg
+   - images/father14.jpg
+   - images/father15.jpg
+   - images/father16.jpg
+   - images/father17.jpg
+   - images/father18.jpg
+   - images/father19.jpg
+   - images/father20.jpg
+
+
+   - images/image21.jpg
 #   - images/image23.jpg
 #   - images/image24.jpg
 #   - images/image25.jpg
@@ -101,6 +131,8 @@ flutter:
 #   - images/imageA1.jpg
 #   - images/imageA2.jpg
 #   - images/imageA3.jpg
+
+
    - assets/audio1.mp3
    - assets/audio2.mp3
 

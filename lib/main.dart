@@ -1,3 +1,4 @@
+import 'package:books/home_page/HomePageNew.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'SplashPage.dart';
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Platform.isIOS == true ? new HomePageIOS() : new HomePage(), //正常选择入口
-//      home: new HomePageIOS(),//测试入口
+//      home: Platform.isIOS == true ? new HomePageIOS() : new HomePage(), //正常选择入口
+      home: new HomePageNew(),//测试入口
 //      routes: <String,WidgetBuilder>{
 //        '/HomePage':(BuildContext context)=>new HomePage()
 //      },

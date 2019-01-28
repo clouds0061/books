@@ -4,29 +4,23 @@ PODS:
   - device_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_wechat (0.0.1):
-    - Flutter
-    - WechatOpenSDK
   - path_provider (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
     - Flutter
   - umeng (0.0.2):
     - Flutter
   - url_launcher (0.0.1):
     - Flutter
-  - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
   - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
-  - flutter_wechat (from `.symlinks/plugins/flutter_wechat/ios`)
+  - Flutter (from `.symlinks/flutter/ios-release`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - umeng (from `.symlinks/plugins/umeng/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - WechatOpenSDK
 
 EXTERNAL SOURCES:
   audioplayers:
@@ -34,11 +28,11 @@ EXTERNAL SOURCES:
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
-  flutter_wechat:
-    :path: ".symlinks/plugins/flutter_wechat/ios"
+    :path: ".symlinks/flutter/ios-release"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
   umeng:
     :path: ".symlinks/plugins/umeng/ios"
   url_launcher:
@@ -48,11 +42,10 @@ SPEC CHECKSUMS:
   audioplayers: def111f6a23e00d9d103563b07de5e44a727bd3c
   device_info: 76ce0b32e13034d1883be4a382433648f9dcee63
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_wechat: 12587364584adf5cecf056711797fe45f3b78114
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
-  umeng: 8b327dc902693cf0eea44fd538a9fba2e5491c3b
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  umeng: 45c801ac5d7789ebe9147175ee24cf73a16bb80f
   url_launcher: 92b89c1029a0373879933c21642958c874539095
-  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
 PODFILE CHECKSUM: 2efc81db42f7ef43a242a1c5a87a135ce665f6b5
 

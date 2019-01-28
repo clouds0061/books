@@ -1,11 +1,12 @@
 <component name="libraryTable">
   <library name="Flutter Plugins">
     <CLASSES>
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/flutter_wechat-0.1.5" />
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/url_launcher-3.0.3" />
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/path_provider-0.4.1" />
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/audioplayers-0.7.7" />
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/device_info-0.2.1" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.7.8" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-3.0.3" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/hosted/pub.dartlang.org/device_info-0.2.1" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.3" />
+      <root url="file://$PROJECT_DIR$/../software/flutter/.pub-cache/git/umeng-bb295d4c3db9980d9b20ae8044a6d793f7b0535f" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

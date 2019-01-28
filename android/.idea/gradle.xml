@@ -7,7 +7,12 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/flutter_wechat-0.1.5/android" />
+            <option value="$USER_HOME$/.pub-cache/git/umeng-e986d56fb2f49bb4feed21f86e9683a7c69e06e8/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.7.8/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/device_info-0.2.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.3/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/url_launcher-3.0.3/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

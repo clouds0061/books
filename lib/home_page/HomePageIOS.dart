@@ -1,18 +1,23 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:books/play_page/PlayPageInPadHor.dart';
 import 'package:flutter/material.dart';
 import 'package:books/home_page/bookListView.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_wechat/flutter_wechat.dart';
+
+//import 'package:flutter_wechat/flutter_wechat.dart';
 import 'package:books/play_page/PlayPage.dart';
 import 'package:books/play_page/PlayPageNew.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:books/utils/CommonUtils.dart';
 import 'dart:io';
 import 'package:async/async.dart';
+//import 'package:fluwx/fluwx.dart';
 import 'dart:ui';
 import 'package:umeng/umeng.dart';
+import 'package:books/utils/HttpUtils.dart';
+//import 'package:fluwx/fluwx.dart' as fluwx;
 
 import 'package:device_info/device_info.dart';
 
@@ -27,10 +32,12 @@ class HomePageIOS extends StatefulWidget {
 ///
 /// 主页 IOS
 class _HomePageIOS extends State<HomePageIOS> {
+  List<Model> models = new List();
   final DeviceInfoPlugin infoPlugin = new DeviceInfoPlugin();
   String name = '';
   num ori = CommonUtils.oriUpAndDown;
   var size;
+  bool wxInstalled = true;
 
   @override
   void initState() {
@@ -38,15 +45,62 @@ class _HomePageIOS extends State<HomePageIOS> {
     super.initState();
     print('这是ios操作系统');
     initDeviceName();
-    FlutterWechat.registerWechat('wx33a7aafbd16d1820');
+//    FlutterWechat.registerWechat('wx3d58ea2fd48e25d1');
+//    fluwx.register(appId: "wx3d58ea2fd48e25d1",
+//        doOnAndroid: true,
+//        doOnIOS: true,
+//        enableMTA: false);
+//    fluwx.isWeChatInstalled();
+    getImageResources();
+    chargeWX();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    onEnd();//页面结束
+    onEnd(); //页面结束
   }
+
+
+  //判断wx是否安装
+  void chargeWX() async {
+//    var re = await fluwx.isWeChatInstalled();
+//    print('----reslut----- = $re');
+//    if (!re) {
+//      setState(() {
+//        wxInstalled = false;
+//        print(wxInstalled.toString());
+//      });
+//    }
+  }
+
+  //请求网络数据
+  void getImageResources() {
+    Map<String, String> params = new Map();
+    params['key'] = 'mother_shareUrl';
+    HttpUtils.httpGet(
+        'https://wxapp.ztsafe.com/keyValue/keyValue/getValue', params, (data) {
+      if (data != null) {
+        final body = json.decode(data.toString());
+        print('body = $body');
+        final datas = body['data'];
+        print('datas = $datas');
+        final value = datas['value'];
+        print('value = $value');
+        List<Model> items = new List();
+        value.forEach((item) {
+          items.add(new Model(item['imgUrl'], item['shareUrl']));
+        });
+        setState(() {
+          if (items != null && items.length != 0) models.addAll(items);
+        });
+      }
+    }, (error) {
+      print(error);
+    });
+  }
+
 
   //获取设备信息
   Future<String> initDeviceName() async {
@@ -58,7 +112,7 @@ class _HomePageIOS extends State<HomePageIOS> {
       setState(() {
         if (CommonUtils.isIPad(name)) {
           initUmeng(1);
-        }else{
+        } else {
           initUmeng(2);
         }
       });
@@ -66,33 +120,35 @@ class _HomePageIOS extends State<HomePageIOS> {
     return name;
   }
 
-  void initUmeng(int i) async{
+  void initUmeng(int i) async {
     //   String res = await Umeng.initUm('5bc44da0f1f556a593000135');//android
 //      res = await Umeng.initUmIos("5bc569f3f1f556e25a000245", "");//ipad
 //    String res = await Umeng.initUmIos("5bc3ef79f1f55675130000af", "");//iPhone
-    if(i==1){
-      String res = await Umeng.initUmIos("5bc569f3f1f556e25a000245", "");//ipad
+    if (i == 1) {
+      String res = await Umeng.initUmIos("5bc569f3f1f556e25a000245", ""); //ipad
       print('iPad:$res');
-    }else{
-      String res = await Umeng.initUmIos("5bc3ef79f1f55675130000af", "");//iPhone
+    } else {
+      String res = await Umeng.initUmIos(
+          "5bc3ef79f1f55675130000af", ""); //iPhone
       print('iPhone:$res');
     }
   }
 
-  void onEvent(String eventId) async{
+  void onEvent(String eventId) async {
     String res = await Umeng.onEvent(eventId);
   }
 
-  void onStart() async{
+  void onStart() async {
     String res = await Umeng.onPageStart('首页');
   }
 
-  void onEnd() async{
+  void onEnd() async {
     String res = await Umeng.onPageEnd('首页');
   }
 
   @override
   Widget build(BuildContext context) {
+//    chargeWX();
     size = MediaQuery
         .of(context)
         .size;
@@ -125,7 +181,7 @@ class _HomePageIOS extends State<HomePageIOS> {
     } catch (Exception) {
       print('出错啦：$Exception');
     }
-    onStart();//首页开始
+    onStart(); //首页开始
     return new MaterialApp(
         title: '',
         home: new Scaffold(
@@ -151,7 +207,7 @@ class _HomePageIOS extends State<HomePageIOS> {
                           padding: EdgeInsets.only(top: 35.0, bottom: 10.0),
                           child: new Center(
                               child: new Text(
-                                  '儿童绘本之我妈妈',
+                                  '儿童绘本之我爸爸',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
@@ -169,13 +225,14 @@ class _HomePageIOS extends State<HomePageIOS> {
                                   ? ScreenUtil().setWidth(1476)
                                   : ScreenUtil().setWidth(690),
                               height: CommonUtils.isIPad(name) == true
-                                  ? CommonUtils.screenIsVertical(size)==true?
-                          ScreenUtil().setHeight(1100): ScreenUtil().setHeight(900)
-                          : ScreenUtil().setHeight(800),
+                                  ? CommonUtils.screenIsVertical(size) == true ?
+                              ScreenUtil().setHeight(1100) : ScreenUtil()
+                                  .setHeight(900)
+                                  : ScreenUtil().setHeight(800),
                               decoration: new BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
                                   image: new DecorationImage(
-                                      image: new AssetImage('images/mom.png'),
+                                      image: new AssetImage('images/daddy1.png'),
                                       fit: BoxFit.fill),
                                   ),
                               child: new Column(
@@ -184,41 +241,69 @@ class _HomePageIOS extends State<HomePageIOS> {
                                   children: <Widget>[
                                     new Align(
                                     //分享按钮
-                                        child: new Container(
-                                            width: ScreenUtil().setWidth(100),
-                                            height: ScreenUtil().setHeight(128),
-                                            margin: EdgeInsets.only(top: 15.0),
-                                            child: new Column(
-                                                children: <Widget>[
-                                                  new IconButton(
-                                                      padding: EdgeInsets.only(
-                                                          top: 0.0),
-                                                      icon: new Image(
-                                                          image: new AssetImage(
-                                                              'images/share.png'),
-                                                          fit: BoxFit.fill),
-                                                      onPressed: () async {
-                                                        onEvent('20181015001');
-                                                        await FlutterWechat
-                                                            .shareText(
-                                                            text: '微信分享',
-                                                            type: 0);
-                                                      },
-                                                      ),
+                                        child: new Offstage(
+                                            offstage: !wxInstalled,
+                                            child: new Container(
+                                                width: ScreenUtil().setWidth(100),
+                                                height: ScreenUtil().setHeight(128),
+                                                margin: EdgeInsets.only(top: 15.0),
+                                                child: new Column(
+                                                    children: <Widget>[
+                                                      new IconButton(
+                                                          padding: EdgeInsets.only(
+                                                              top: 0.0),
+                                                          icon: new Image(
+                                                              image: new AssetImage(
+                                                                  'images/share.png'),
+                                                              fit: BoxFit.fill),
+                                                          onPressed: () async {
+                                                            onEvent('20181015001');
+                                                            if (models.isNotEmpty &&
+                                                                wxInstalled) {
+                                                              try {
+//                                                                await fluwx.share(
+//                                                                    WeChatShareWebPageModel(
+//                                                                        webPage: models[0]
+//                                                                            .shareUrl,
+//                                                                        title: '绘图故事',
+//                                                                        scene: fluwx
+//                                                                            .WeChatScene
+//                                                                            .SESSION,
+//                                                                        thumbnail: models[0]
+//                                                                            .imgUrl,
+//                                                                        ));
+                                                              } catch (e) {
+
+                                                              }
+//                                                          await FlutterWechat
+//                                                              .shareWebPage(
+//                                                              imgUrl: models[0]
+//                                                                  .imgUrl,
+//                                                              title: '绘图故事',
+//                                                              description: '',
+//                                                              type: 0,
+//                                                              webpageUrl: models[0]
+//                                                                  .shareUrl
+//                                                          );
+                                                            }
+                                                          },
+                                                          ),
 //                                    new Text(
 //                                      '分享',
 //                                      style: TextStyle(fontSize: 20.0),
 //                                    ),
-                                                ],
+                                                    ],
+                                                    ),
                                                 ),
-                                            ),
+                                        ),
                                         alignment: FractionalOffset.topRight,
                                         ),
                                     new Expanded(
                                         child: new GestureDetector(
                                             onTap: () async {
-                                              onEvent('play');//点击了paly按钮 进入播放页面
-                                              onEnd();//此页面结束
+                                              onEvent(
+                                                  'play'); //点击了paly按钮 进入播放页面
+                                              onEnd(); //此页面结束
                                               setState(() {
                                                 CommonUtils.isIPad(name)
                                                     ? ori = CommonUtils
@@ -236,7 +321,7 @@ class _HomePageIOS extends State<HomePageIOS> {
                                                         return CommonUtils
                                                             .isIPad(name)
                                                             ? new PlayPageInPadHor() //如果是Pad跳转到Pad横屏模式
-                                                            : new PlayPageNew();
+                                                            : new PlayPageNew(null,3);
                                                       })).then((result) {
                                                 setState(() {
                                                   ori = result;
@@ -313,4 +398,14 @@ class _HomePageIOS extends State<HomePageIOS> {
             ));
     // TODO: implement build
   }
+}
+
+
+class Model {
+  String imgUrl;
+  String shareUrl;
+
+  Model(this.imgUrl, this.shareUrl);
+
+
 }

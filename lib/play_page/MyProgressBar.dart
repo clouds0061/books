@@ -14,12 +14,17 @@ class MyProgressBar extends StatefulWidget {
   num _max_progress;
   num _current_progress;
   _ProgressBar _progressBar;
+  bool flag = true;
 
   Function setFlag;
 
   void setProgress(num current_progress,num max_progress) {
     this._current_progress = current_progress;
     _progressBar.setProgress(current_progress,max_progress);
+  }
+  void setFlags(bool flag){
+    this.flag = flag;
+//    _progressBar.setFlags(flag);
   }
 
   bool getFlag() {
@@ -45,7 +50,7 @@ class _ProgressBar extends State<MyProgressBar> {
   var name;
   final DeviceInfoPlugin infoPlugin = new DeviceInfoPlugin();
 
-  bool flag_play = true; //是否播放  true为正在播放 false为暂停
+  bool flag_play = CommonUtils.getInstance().getFlagPlay(); //是否播放  true为正在播放 false为暂停
 
   void setProgress(num progress,num max_progress) {
     setState(() {
@@ -58,6 +63,10 @@ class _ProgressBar extends State<MyProgressBar> {
     return this.flag_play;
   }
 
+  void setFlags(bool flag){
+    this.flag_play = flag;
+  }
+
   _ProgressBar(this._max_progress, this._current_progress, this.setFlag);
 
   @override
@@ -65,6 +74,13 @@ class _ProgressBar extends State<MyProgressBar> {
     // TODO: implement initState
     super.initState();
     initDeviceName();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    CommonUtils.getInstance().setFlagPlay(true);
   }
 
   //获取设备信息
@@ -108,6 +124,7 @@ class _ProgressBar extends State<MyProgressBar> {
                           setState(() {
                             flag_play = !flag_play;
                           });
+                          CommonUtils.getInstance().setFlagPlay(flag_play);
                           setFlag(flag_play);
                         },
                         child: Image.asset(
@@ -139,7 +156,7 @@ class _ProgressBar extends State<MyProgressBar> {
                                 ScreenUtil().setHeight(16))),
                     new Container(
                       width: CommonUtils.isIPad(name) == true
-                          ? ScreenUtil().setWidth(164)
+                          ? ScreenUtil().setWidth(214)
                           : ScreenUtil().setWidth(84),
                       height: ScreenUtil().setHeight(24),
                       margin: EdgeInsets.only(left: 0.0, bottom: CommonUtils.isIPad(name)==true?12.0:3.0),

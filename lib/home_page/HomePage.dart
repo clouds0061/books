@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:books/home_page/bookListView.dart';
-import 'package:flutter_wechat/flutter_wechat.dart';
+//import 'package:flutter_wechat/flutter_wechat.dart';
 import 'package:books/play_page/PlayPage.dart';
 import 'package:books/play_page/PlayPageNew.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +22,7 @@ class _HomePage extends State<HomePage> {
     // TODO: implement initState
     super.initState();
 //    CommonUtils.setScreenOrientation(CommonUtils.oriUpAndDown);
-    FlutterWechat.registerWechat('wx33a7aafbd16d1820');
+//    FlutterWechat.registerWechat('wx3d58ea2fd48e25d1');
     print('Android---');
   }
 
@@ -89,8 +89,8 @@ class _HomePage extends State<HomePage> {
                                               'images/share.png'),
                                           fit: BoxFit.fill),
                                       onPressed: () async {
-                                        await FlutterWechat.shareText(
-                                            text: '微信分享', type: 0);
+//                                        await FlutterWechat.shareText(
+//                                            text: '微信分享', type: 0);
                                       },
                                     ),
 //                                    new Text(
@@ -110,7 +110,7 @@ class _HomePage extends State<HomePage> {
                                   await Navigator.push(context,
                                       new MaterialPageRoute(
                                           builder: (BuildContext context) {
-                                    return new PlayPageNew();
+                                    return new PlayPageNew(null,3);
                                   }));
                                 },
                                 child: new Container(

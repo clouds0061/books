@@ -31,8 +31,8 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
   List<String> stringList = new List(); //放需要暂时的文字
   num _startPosition = 0;
   num _movePosition = 0;
-  var _max_pageV = 21; //最大页数 因为是从0开始的 所以31也的漫画在这里最大页数是30
-  var _max_pageH = 11; //最大页数 因为是从0开始的 所以31也的漫画在这里最大页数是30
+  var _max_pageV = 20; //最大页数 因为是从0开始的 所以31也的漫画在这里最大页数是30
+  var _max_pageH = 10; //最大页数 因为是从0开始的 所以31也的漫画在这里最大页数是30
   int indexV = 0; //播放的页数
   int indexH = 0; //播放的页数
   Ticker _ticker; //计时器 用来几时
@@ -50,8 +50,10 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     control = new PlayPageControl();
-    myProgressBarH = new MyProgressBar(21, indexH + 1, _setFlag);
-    myProgressBarV = new MyProgressBar(11, indexV + 1, _setFlag);
+    if(myProgressBarH==null&&myProgressBarV==null){
+      myProgressBarH = new MyProgressBar(20, indexH + 1, _setFlag);
+      myProgressBarV = new MyProgressBar(10, indexV + 1, _setFlag);
+    }
 
     timer = new Timer(const Duration(milliseconds: 2000), () {
       setState(() {
@@ -61,9 +63,11 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
 
     initAnimation(); //初始化动画
     initImage(); //初始化图片
+//    initGrandfatherImage(); //初始化我的爷爷的图片
     _PlayPage(); //初始化图片播放计时器
     fadeTickers(); //初始化淡入淡出效果计时器
-    CommonUtils.initString(stringList);
+//    CommonUtils.initString(stringList);
+    CommonUtils.initStringDaddy(stringList);
 //    CommonUtils.setScreenOrientation(CommonUtils.oriLeftAndRight);
   }
 
@@ -94,6 +98,7 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
     if (timer.isActive) timer.cancel();
     super.dispose();
     onEnd();
+    if(indexH == _max_pageH - 1||indexV == _max_pageV -1 ) onEvent('finishReading');
   }
 
   void _setFlag(bool flag) {
@@ -124,11 +129,20 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
 //    controller.forward();
   }
 
+
+
+  void initGrandfatherImage(){
+    for (int i = 0; i < 15 * 2; i++) {
+      //image1 -  image21
+      var num = i + 1;
+      imageList.add(new AssetImage('images/grandfather$num.jpg'));
+    }
+  }
   //初始化图片
   void initImage() {
 //    imageList.add(new AssetImage('images/imageA1.jpg'));
 //    imageList.add(new AssetImage('images/imageA2.jpg'));
-    for (int i = 0; i < 11 * 2 - 1; i++) {
+    for (int i = 0; i < 10 * 2; i++) {
       //image1 -  image21
       var num = i + 1;
       imageList.add(new AssetImage('images/image$num.jpg'));
@@ -141,7 +155,7 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
     _ticker = new Ticker((Duration d) {
       //建立计时器。没*秒让index++;
       //5秒一次切换
-      if (d.inSeconds % 5 == 0 && d.inSeconds >= 5) {
+      if (d.inSeconds % 8 == 0 && d.inSeconds >= 8) {
         _ticker.stop(canceled: true);
         setState(() {
           if(CommonUtils.screenIsVertical(size)){
@@ -152,8 +166,8 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
 //          indexV++;
 //          indexH++;
           CommonUtils.screenIsVertical(size)==false?
-          myProgressBarV.setProgress(indexH + 1, 11):
-          myProgressBarH.setProgress(indexV + 1, 21);
+          myProgressBarV.setProgress(indexH + 1, 10):
+          myProgressBarH.setProgress(indexV + 1, 20);
         });
       }
     });
@@ -174,11 +188,11 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
 
   //设置播放图片 竖屏
   ImageProvider setImageVer() {
-    if (!_ticker.isTicking && _flag) if (indexV < _max_pageV)
+    if (!_ticker.isTicking && _flag) if (indexV < _max_pageV - 1)
       _ticker.start(); //在没有计时器并且不是,还有不是最后一页手动换页的暂停状态下要开始新的计时
 //    print('index增长到了$index');
-    if (indexV >= _max_pageV) {
-      indexV = _max_pageV;
+    if (indexV >= _max_pageV - 1) {
+      indexV = _max_pageV - 1;
       _ticker.stop(canceled: true);
     }
 //
@@ -204,10 +218,10 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
 
   //设置播放图片
   ImageProvider setImage(num i) {
-    if (!_ticker.isTicking && _flag) if (indexH < _max_pageH)
+    if (!_ticker.isTicking && _flag) if (indexH < _max_pageH - 1)
       _ticker.start(); //在没有计时器并且不是,还有不是最后一页手动换页的暂停状态下要开始新的计时
 //    print('index增长到了$index');
-    if (indexH >= _max_pageH) {
+    if (indexH >= _max_pageH - 1) {
       indexH = _max_pageH - 1;
       _ticker.stop(canceled: true);
     }
@@ -258,10 +272,10 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
         _oriVer = CommonUtils.screenIsVertical(size);//赋值 与屏幕方向返回值一样
         setState(() {
           if (CommonUtils.screenIsVertical(size)) {
-            _max_pageV = 21;
+            _max_pageV = 20;
 //            myProgressBar.setProgress(index + 1, _max_page);
           } else {
-            _max_pageH = 11;
+            _max_pageH = 10;
 //            myProgressBar.setProgress(index + 1, _max_page);
           }
         });
@@ -269,15 +283,15 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
         _oriVer = !_oriVer;
         setState(() {
           if (CommonUtils.screenIsVertical(size)) {
-            _max_pageV = 21;
+            _max_pageV = 20;
             CommonUtils.screenIsVertical(size)==false?
-            myProgressBarV.setProgress(indexH + 1, 11):
-            myProgressBarH.setProgress(indexV + 1, 21);
+            myProgressBarV.setProgress(indexH + 1, 10):
+            myProgressBarH.setProgress(indexV + 1, 20);
           } else {
-            _max_pageH = 11;
+            _max_pageH = 10;
             CommonUtils.screenIsVertical(size)==false?
-            myProgressBarV.setProgress(indexH + 1, 11):
-            myProgressBarH.setProgress(indexV + 1, 21);
+            myProgressBarV.setProgress(indexH + 1, 10):
+            myProgressBarH.setProgress(indexV + 1, 20);
           }
         });
       }
@@ -362,8 +376,8 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
                   if (indexV >= _max_pageV) indexV = _max_pageV - 1;
                   if (indexH >= _max_pageH) indexH = _max_pageH - 1;
                   CommonUtils.screenIsVertical(size)==false?
-                  myProgressBarV.setProgress(indexH + 1, 11):
-                  myProgressBarH.setProgress(indexV + 1, 21);
+                  myProgressBarV.setProgress(indexH + 1, 10):
+                  myProgressBarH.setProgress(indexV + 1, 20);
                 });
               } else if (_movePosition - _startPosition > 30) {
                 _ticker.stop();
@@ -384,8 +398,8 @@ class _PlayInPad extends State<PlayPageInPadHor> with TickerProviderStateMixin {
                   if (indexV < 0) indexV = 0;
                   if (indexH < 0) indexH = 0;
                   CommonUtils.screenIsVertical(size)==false?
-                  myProgressBarV.setProgress(indexH + 1, 11):
-                  myProgressBarH.setProgress(indexV + 1, 21);
+                  myProgressBarV.setProgress(indexH + 1, 10):
+                  myProgressBarH.setProgress(indexV + 1, 20);
                 });
               }
             },
